@@ -1,62 +1,585 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Arcade ❤️</title>
 
-<title>Love Games</title>
+    <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
+    <style>
+
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
+        }
+
+        .game-box {
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 25px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            transition: .4s;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .game-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255,0,128,.25);
+        }
+
+        .game-box h2 {
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            color: #ff7eb3;
+        }
+
+        .game-box p {
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .game-area {
+            height: 320px;
+            background: rgba(0,0,0,.35);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .score {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ff7eb3;
+        }
+
+        /* Basketball */
+
+        #basketball-hoop {
+            position: absolute;
+            right: 25px;
+            top: 60px;
+            font-size: 75px;
+        }
+
+        #basketball {
+            position: absolute;
+            left: 30px;
+            bottom: 30px;
+            font-size: 55px;
+            cursor: pointer;
+            transition: 1s;
+        }
+
+        /* Memory Game */
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 12px;
+        }
+
+        .memory-card {
+            height: 70px;
+            background: linear-gradient(135deg,#ff0080,#6a5cff);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Heart Game */
+
+        #heart-game {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 35px;
+            cursor: pointer;
+            animation: fall 4s linear forwards;
+        }
+
+        @keyframes fall {
+
+            0% {
+                transform: translateY(-50px);
+            }
+
+            100% {
+                transform: translateY(380px);
+            }
+
+        }
+
+        /* Quiz */
+
+        .quiz-question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .quiz-options button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        /* Mobile */
+
+        @media(max-width:768px){
+
+            .games-container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="bg-animation">
+        <div class="stars"></div>
+    </div>
+
+    <nav>
+
+        <div class="logo">
+            LOVE.GAMES
+        </div>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="memories.html">Memories</a></li>
+            <li><a href="final-letter.html">Final</a></li>
+        </ul>
+
+    </nav>
+
+    <section class="section">
+
+        <h1 class="section-title gradient-text">
+            Romantic Arcade 🎮❤️
+        </h1>
+
+        <div class="games-container">
+
+            <!-- Basketball Game -->
+
+            <div class="game-box">
+
+                <h2>🏀 Basketball Love Shot</h2>
+
+                <p>
+                    Score 17 baskets for Abhishikta.
+                </p>
+
+                <div class="game-area">
+
+                    <div class="score">
+                        Score:
+                        <span id="basket-score">0</span>/17
+                    </div>
+
+                    <div id="basketball-hoop">
+                        🧺
+                    </div>
+
+                    <div id="basketball">
+                        🏀
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Memory Game -->
+
+            <div class="game-box">
+
+                <h2>💌 Memory Match</h2>
+
+                <p>
+                    Match all romantic symbols.
+                </p>
+
+                <div class="game-area">
+
+                    <div class="score">
+                        Matches:
+                        <span id="memory-score">0</span>/4
+                    </div>
+
+                    <div class="memory-grid" id="memory-grid"></div>
+
+                </div>
+
+            </div>
+
+            <!-- Heart Game -->
+
+            <div class="game-box">
+
+                <h2>❤️ Catch The Hearts</h2>
+
+                <p>
+                    Catch hearts before they disappear.
+                </p>
+
+                <div class="game-area" id="heart-game">
+
+                    <div class="score">
+                        Caught:
+                        <span id="heart-score">0</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Quiz Game -->
+
+            <div class="game-box">
+
+                <h2>🧠 Relationship Quiz</h2>
+
+                <p>
+                    How well does she know your love story?
+                </p>
+
+                <div class="game-area">
+
+                    <div class="quiz-question" id="quiz-question"></div>
+
+                    <div class="quiz-options" id="quiz-options"></div>
+
+                    <div id="quiz-result"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+<script>
+
+    /* Basketball Game */
+
+    let basketScore = 0;
+
+    const ball = document.getElementById('basketball');
+
+    ball.addEventListener('click', () => {
+
+        ball.style.transform =
+        'translate(240px,-190px) rotate(720deg)';
+
+        setTimeout(() => {
+
+            basketScore++;
+
+            document.getElementById('basket-score').innerText =
+            basketScore;
+
+            ball.style.transition = 'none';
+
+            ball.style.transform = 'translate(0,0)';
+
+            setTimeout(() => {
+
+                ball.style.transition = '1s';
+
+            }, 50);
+
+            if(basketScore === 17){
+
+                alert('🏆 LEVEL CLEARED ❤️');
+
+            }
+
+        }, 1000);
+
+    });
 
 
-<style>
+    /* Memory Game */
+
+    const emojis = [
+        '❤️',
+        '🏀',
+        '✨',
+        '💌',
+        '❤️',
+        '🏀',
+        '✨',
+        '💌'
+    ];
+
+    let shuffled =
+    [...emojis].sort(() => Math.random() - 0.5);
+
+    const grid =
+    document.getElementById('memory-grid');
+
+    let firstCard = null;
+    let secondCard = null;
+    let lock = false;
+    let matches = 0;
+
+    shuffled.forEach((emoji) => {
+
+        const card = document.createElement('div');
+
+        card.classList.add('memory-card');
+
+        card.dataset.emoji = emoji;
+
+        card.innerText = '?';
+
+        grid.appendChild(card);
+
+        card.addEventListener('click', () => {
+
+            if(lock || card.innerText !== '?') return;
+
+            card.innerText = emoji;
+
+            if(!firstCard){
+
+                firstCard = card;
+
+            }
+
+            else{
+
+                secondCard = card;
+
+                lock = true;
+
+                if(
+                    firstCard.dataset.emoji ===
+                    secondCard.dataset.emoji
+                ){
+
+                    matches++;
+
+                    document.getElementById('memory-score').innerText =
+                    matches;
+
+                    firstCard = null;
+                    secondCard = null;
+
+                    lock = false;
+
+                    if(matches === 4){
+
+                        alert('💖 MEMORY COMPLETED 💖');
+
+                    }
+
+                }
+
+                else{
+
+                    setTimeout(() => {
+
+                        firstCard.innerText = '?';
+                        secondCard.innerText = '?';
+
+                        firstCard = null;
+                        secondCard = null;
+
+                        lock = false;
+
+                    }, 700);
+
+                }
+
+            }
+
+        });
+
+    });
 
 
-.games-container{
+    /* Heart Game */
 
-display:grid;
+    const heartGame =
+    document.getElementById('heart-game');
 
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    let heartScore = 0;
 
-gap:30px;
+    function createHeart(){
 
-margin-top:50px;
+        const heart =
+        document.createElement('div');
 
-}
+        heart.classList.add('heart');
+
+        heart.innerText = '❤️';
+
+        heart.style.left =
+        Math.random() * 90 + '%';
+
+        heartGame.appendChild(heart);
+
+        heart.addEventListener('click', () => {
+
+            heart.remove();
+
+            heartScore++;
+
+            document.getElementById('heart-score').innerText =
+            heartScore;
+
+            if(heartScore === 17){
+
+                alert('❤️ LOVE OVERLOAD ❤️');
+
+            }
+
+        });
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 4000);
+
+    }
+
+    setInterval(createHeart, 900);
 
 
-.game-box{
+    /* Quiz Game */
 
-background:rgba(255,255,255,.05);
+    const quizData = [
 
-padding:30px;
+        {
+            question:'Where does Abhishikta live?',
+            options:[
+                'Mumbai',
+                'Delhi',
+                'Pune',
+                'Jaipur'
+            ],
+            answer:'Delhi'
+        },
 
-border-radius:25px;
+        {
+            question:'What is her passion?',
+            options:[
+                'Basketball',
+                'Coding',
+                'Cricket',
+                'Dance'
+            ],
+            answer:'Basketball'
+        },
 
-border:1px solid rgba(255,255,255,.1);
+        {
+            question:'How many days together?',
+            options:[
+                '17 days',
+                '2 years',
+                '1 month',
+                '100 days'
+            ],
+            answer:'17 days'
+        }
 
-backdrop-filter:blur(10px);
+    ];
 
-text-align:center;
+    let currentQuiz = 0;
 
-}
+    function loadQuiz(){
 
+        const q = quizData[currentQuiz];
 
-.game-area{
+        document.getElementById('quiz-question').innerText =
+        q.question;
 
-margin-top:25px;
+        const options =
+        document.getElementById('quiz-options');
 
-min-height:300px;
+        options.innerHTML = '';
 
-position:relative;
+        q.options.forEach(option => {
 
-overflow:hidden;
+            const btn =
+            document.createElement('button');
 
-border-radius:20px;
+            btn.classList.add(
+                'btn',
+                'btn-primary'
+            );
 
-</html>
+            btn.innerText = option;
 
+            btn.onclick = () => {
+
+                if(option === q.answer){
+
+                    currentQuiz++;
+
+                    if(currentQuiz < quizData.length){
+
+                        loadQuiz();
+
+                    }
+
+                    else{
+
+                        document.getElementById('quiz-result').innerHTML =
+
+                        '<h2 style=\"margin-top:20px;color:#ff7eb3;\">❤️ PERFECT SCORE ❤️</h2>';
+
+                    }
+
+                }
+
+                else{
+
+                    alert('Wrong answer 😭');
+
+                }
+
+            };
+
+            options.appendChild(btn);
+
+        });
+
+    }
+
+    loadQuiz();
+
+</script>
+
+</body>
+  </html>
