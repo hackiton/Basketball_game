@@ -1,790 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhishikta & Hackiton | Level 17 Challenge</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&family=Share+Tech+Mono&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhishikta ❤️ Hackiton</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
+<link rel="stylesheet" href="style.css">
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a1a2e);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: white;
-            overflow-x: hidden;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            padding: 15px 0;
-            text-align: center;
-            z-index: 1000;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-
-        nav a:hover { color: #ff758c; }
-
-        section {
-            min-height: 100vh;
-            padding: 120px 20px 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 4rem;
-            color: #ff758c;
-            text-shadow: 2px 2px 10px rgba(255, 117, 140, 0.5);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 900px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* --- GALLERY SECTION --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.1);
-            transition: 0.4s;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            transition: transform 0.6s ease-in-out;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.03);
-            border-color: #ff7eb3;
-            box-shadow: 0 10px 30px rgba(255, 126, 179, 0.4);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-label {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.7);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        /* --- GAME SECTION (PRO LEVEL) --- */
-        #game-canvas {
-            width: 100%;
-            height: 450px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 3px solid #ff758c;
-            border-radius: 15px;
-            position: relative;
-            margin: 30px 0;
-            overflow: hidden;
-            cursor: pointer;
-            box-shadow: inset 0 0 20px rgba(255, 117, 140, 0.3);
-        }
-
-        .court-lines {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40px;
-            background: #cd853f; /* wood floor color */
-            border-top: 4px solid #ff758c;
-            z-index: 1;
-        }
-
-        .hoop {
-            width: 100px;
-            height: 10px;
-            background: #ff4757;
-            position: absolute;
-            top: 70px; /* Base height */
-            border-radius: 5px;
-            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.7);
-            z-index: 2;
-            transition: left 0.1s linear, top 0.1s linear;
-        }
-        
-        .hoop::after {
-            content: '';
-            position: absolute;
-            width: 90px;
-            height: 70px;
-            border: 2px dashed rgba(255, 255, 255, 0.6);
-            border-top: none;
-            top: 10px;
-            left: 5px;
-            border-radius: 0 0 45px 45px;
-        }
-
-        .ball {
-            font-size: 50px;
-            position: absolute;
-            bottom: 20px;
-            z-index: 3;
-            transition: transform 0.1s linear;
-        }
-
-        /* Meters */
-        .game-meter {
-            width: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            position: absolute;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        #power-meter {
-            height: 150px;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        #power-meter .meter-fill {
-            height: 0%;
-            background: linear-gradient(0deg, #ff7eb3, #ff4757);
-            bottom: 0;
-            position: absolute;
-            width: 100%;
-        }
-
-        #angle-meter {
-            height: 150px;
-            left: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        #angle-meter .meter-fill {
-            height: 0%;
-            background: linear-gradient(0deg, #4facfe, #00c6ff);
-            bottom: 0;
-            position: absolute;
-            width: 100%;
-        }
-
-        /* Wind Indicator */
-        #wind-indicator {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.5);
-            padding: 10px;
-            border-radius: 10px;
-            font-family: 'Share Tech Mono', monospace;
-            color: #4facfe;
-            font-size: 1.1rem;
-            display: none;
-        }
-
-        /* Pro Game Overlay */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            transition: opacity 0.5s ease-in-out;
-            border-radius: 15px;
-        }
-
-        .hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Anniversary Unlock */
-        #anniversary-card {
-            display: none;
-            max-width: 600px;
-            margin-top: 50px;
-            border: 3px solid #ff7eb3;
-            animation: finalPulse 2s infinite;
-        }
-        
-        @keyframes finalPulse {
-            0% { box-shadow: 0 0 20px rgba(255, 126, 179, 0.4); }
-            50% { box-shadow: 0 0 40px rgba(255, 126, 179, 0.8); }
-            100% { box-shadow: 0 0 20px rgba(255, 126, 179, 0.4); }
-        }
-
-        /* Standard Buttons */
-        .btn {
-            padding: 15px 35px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-            outline: none;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .btn-yes {
-            background: #4facfe;
-            color: white;
-            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
-            margin: 10px;
-        }
-
-        .btn-yes:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.6);
-        }
-
-        /* --- UTILITY CLASSES --- */
-        .text-hacker {
-            font-family: 'Share Tech Mono', monospace;
-            color: #4facfe;
-        }
-
-        @keyframes courtFlash {
-            0% { border-color: #ff758c; }
-            50% { border-color: #ff7eb3; }
-            100% { border-color: #ff758c; }
-        }
-
-        /* Dynamic Court Class (Level 5) */
-        .level-5-active #game-canvas {
-            animation: courtFlash 1s infinite;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('image_3.png');
-            background-size: cover;
-            background-position: center;
-        }
-
-    </style>
 </head>
-<body onload="initApp()">
-
-    <nav>
-        <a href="#about">The Point Guard</a>
-        <a href="#game">Level 17 Challenge</a>
-        <a href="#about">Delhi <-> Gurugram Hub</a>
-    </nav>
-
-    <section id="about">
-        <div class="glass-card">
-            <h1 class="title">Abhishikta: More than a Game</h1>
-            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px;">
-                National Basketball Player 🏀. Class 12, PCB Mastermind 🔬.
-                Gurugram Delhi, LDR ki Point Guard. Badi Beti ki responsibilities ke saath bhi... sabse badhiya teammate.
-                18 years old, 17 days of us. Happy Anniversary, Abhishikta!
-            </p>
-
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="image_1.jpeg" alt="Abhishikta 1">
-                    <div class="gallery-label text-hacker">> Those Killer Eyes</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="image_0.jpeg" alt="Eyes">
-                    <div class="gallery-label text-hacker">> The Beauty</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="image_2.png" alt="Abhishikta 2">
-                    <div class="gallery-label text-hacker">> My Wife</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="game">
-        <div class="glass-card">
-            <h1 class="title" style="font-size: 2.8rem;">Anniversary Arcade</h1>
-            <p>Ready, Abhishikta? Score <span class="text-hacker">17 Points</span> (one for each day) to unlock a secret message.</p>
-            <p class="text-hacker" id="level-display" style="margin-top: 10px;">LEVEL 1: The warm-up</p>
-
-            <div id="game-canvas">
-                <div class="court-lines"></div>
-                <div id="hoop" class="hoop"></div>
-                <div id="ball" class="ball">🏀</div>
-
-                <div id="power-meter" class="game-meter">
-                    <div class="meter-fill" id="power-fill"></div>
-                </div>
-                
-                <div id="angle-meter" class="game-meter">
-                    <div class="meter-fill" id="angle-fill"></div>
-                </div>
-
-                <div id="wind-indicator" class="text-hacker">Wind: <span id="wind-value">0</span></div>
-
-                <div id="ready-overlay" class="overlay">
-                    <h1 class="title" style="font-size: 3rem;">Level <span id="current-level-num">1</span></h1>
-                    <p class="text-hacker" id="level-instruction"></p>
-                    <button class="btn btn-yes" onclick="startLevelShoot()">READY! 🏀</button>
-                    <p class="text-hacker" style="margin-top: 20px; font-size: 0.9rem;">Hackiton connection is secure.</p>
-                </div>
-
-                <div id="final-unlock-overlay" class="overlay hidden">
-                    <h1 class="title">Level 17 Achieved! ❤️</h1>
-                    <p class="text-hacker">Hacking success. New relationship milestone added.</p>
-                    <button class="btn btn-yes" onclick="revealAnniversaryData()">UNLOCK DATA</button>
-                </div>
-            </div>
-            
-            <p class="text-hacker" id="final-score" style="margin-top: 15px; font-weight: bold; font-size: 1.2rem;">SCORE: <span id="current-score">0</span> / 17</p>
-        </div>
-
-        <div class="glass-card anniversary-card" id="anniversary-card">
-            <h1 class="title">17 Days of Us</h1>
-            <p style="font-style: italic;">"Jaise har dynamic basketball play, ek perfect decision-making aur form pe depend karta hai, waise hi meri life tumhari Point Guard skills pe dependent hai. Gurugram to Delhi is just a connection path; reality hum hai. 17 days is just level 1. Hacked by your beauty. Love you, Abhishikta!"</p>
-            <img src="image_3.jpg" style="width: 100%; max-width: 400px; border-radius: 15px; margin-top: 20px; border: 2px solid #ff7eb3;">
-        </div>
-    </section>
-
-    <script>
-        // --- GAME MECHANICS CONSTANTS ---
-        const BALL_START_BOTTOM = 20;
-        const TARGET_SCORE = 17;
-
-        // Level Config (Difficulty Scaling)
-        const levels = {
-            1: { name: 'Level 1: The warm-up', instruction: 'Standard shot. Focus on timing.', distance: 'mid', hoopSpeed: 0, powerSpeed: 0.05, windFactor: 0 },
-            2: { name: 'Level 2: The Mid-Range', instruction: 'Increased distance. Hoop is moving slowly.', distance: 'far', hoopSpeed: 2, powerSpeed: 0.1, windFactor: 0 },
-            3: { name: 'Level 3: The 3-Point Challenge', instruction: 'Further distance. Faster hoop. Introduce wind!', distance: 'max', hoopSpeed: 4, powerSpeed: 0.2, windFactor: 0.2 },
-            4: { name: 'Level 4: The Delhi-Gurugram Connection', instruction: 'Max distance. Hoop is erratic. Heavy wind.', distance: 'max', hoopSpeed: 6, powerSpeed: 0.3, windFactor: 0.5 },
-            5: { name: 'The Hacker Boss Level', instruction: 'All limits hacked. Hoop moves, court flashes, max wind. Only perfect form works.', distance: 'mid-max', hoopSpeed: 10, powerSpeed: 0.5, windFactor: 1.0 }
-        };
-
-        // Current Game State
-        let currentLevel = 1;
-        let score = 0;
-        let attemptsLeft = 50; // Just for game feel
-        let isShooting = false;
-        let finalScore = 0;
-
-        // Meter Logic
-        let powerInterval;
-        let powerFillLevel = 0;
-        let powerDirection = 1;
-        let currentPower = 0;
-
-        let angleInterval;
-        let angleFillLevel = 0;
-        let angleDirection = 1;
-        let currentAngle = 0;
-
-        // Hoop and Wind
-        let hoopDirection = 1;
-        let currentWind = 0;
-
-        // Elements
-        const canvas = document.getElementById('game-canvas');
-        const hoop = document.getElementById('hoop');
-        const ball = document.getElementById('ball');
-        const levelDisplay = document.getElementById('level-display');
-        const scoreDisplay = document.getElementById('current-score');
-        const finalScoreText = document.getElementById('final-score');
-        const currentLevelNum = document.getElementById('current-level-num');
-        const levelInstruction = document.getElementById('level-instruction');
-        const readyOverlay = document.getElementById('ready-overlay');
-        const windIndicator = document.getElementById('wind-indicator');
-        const windValue = document.getElementById('wind-value');
-        const finalUnlockOverlay = document.getElementById('final-unlock-overlay');
-        const anniversaryCard = document.getElementById('anniversary-card');
-
-        // Initialization
-        function initApp() {
-            setupLevel(1);
-        }
-
-        // --- GAME LOGIC ---
-
-        function setupLevel(level) {
-            currentLevel = level;
-            const config = levels[level];
-
-            levelDisplay.innerText = config.name;
-            currentLevelNum.innerText = level;
-            levelInstruction.innerText = config.instruction;
-            scoreDisplay.innerText = score;
-            readyOverlay.classList.remove('hidden'); // Show ready screen
-
-            // Set up physical properties
-            setBallPosition(config.distance);
-            hoop.style.top = '70px'; // Reset hoop height
-            
-            // Set up dynamic effects
-            if (config.hoopSpeed > 0) {
-                initHoopMovement(config.hoopSpeed);
-            } else {
-                stopHoopMovement();
-            }
-
-            if (config.windFactor > 0) {
-                initWind(config.windFactor);
-            } else {
-                hideWind();
-            }
-
-            // Level 5 specific court change
-            if (level === 5) {
-                document.body.classList.add('level-5-active');
-            } else {
-                document.body.classList.remove('level-5-active');
-            }
-        }
-
-        // PHYSICAL SETUP (Distance Scaling)
-        function setBallPosition(distance) {
-            switch(distance) {
-                case 'mid':
-                    ball.style.left = '30%';
-                    break;
-                case 'far':
-                    ball.style.left = '20%';
-                    break;
-                case 'max':
-                    ball.style.left = '10%';
-                    break;
-                case 'mid-max': // Level 5 reset
-                    ball.style.left = '40%'; 
-                    break;
-                default:
-                    ball.style.left = '50%'; // warm-up center
-            }
-            ball.style.bottom = BALL_START_BOTTOM + 'px';
-            ball.style.transform = 'scale(1)'; // Reset size
-            ball.style.display = 'block';
-        }
-
-        // LEVEL START -> Start the meters
-        function startLevelShoot() {
-            readyOverlay.classList.add('hidden'); // Hide instructions
-            startPowerMeter();
-        }
-
-        // --- METER MECHANICS (Professional Clicking) ---
-
-        // Start Power Meter (First click/down)
-        function startPowerMeter() {
-            canvas.onmousedown = handleCanvasMouseDown;
-            document.onmouseup = handleCanvasMouseUp;
-            
-            const powerSpeed = levels[currentLevel].powerSpeed;
-            clearInterval(powerInterval);
-            powerInterval = setInterval(() => {
-                powerFillLevel += (powerDirection * powerSpeed);
-                if (powerFillLevel >= 1 || powerFillLevel <= 0) powerDirection *= -1;
-                document.getElementById('power-fill').style.height = (powerFillLevel * 100) + '%';
-            }, 10);
-        }
-
-        // Start Angle Meter (Second Click, or when Power is confirmed)
-        function startAngleMeter() {
-            const angleSpeed = levels[currentLevel].powerSpeed / 1.5; // Slightly slower
-            clearInterval(angleInterval);
-            angleInterval = setInterval(() => {
-                angleFillLevel += (angleDirection * angleSpeed);
-                if (angleFillLevel >= 1 || angleFillLevel <= 0) angleDirection *= -1;
-                document.getElementById('angle-fill').style.height = (angleFillLevel * 100) + '%';
-            }, 10);
-        }
-
-        // HANDLE USER INPUT (Professionally)
-        function handleCanvasMouseDown() {
-            // Confirm the current meter (power is first)
-            if (powerInterval && !angleInterval) {
-                currentPower = powerFillLevel;
-                clearInterval(powerInterval);
-                startAngleMeter();
-            }
-        }
-
-        function handleCanvasMouseUp() {
-            // Confirm angle and execute shot
-            if (angleInterval) {
-                currentAngle = angleFillLevel;
-                clearInterval(angleInterval);
-                executeShot();
-            }
-        }
-
-        // --- SHOOTING MECHANICS AND PHYSICS ---
-
-        function executeShot() {
-            isShooting = true;
-            attemptsLeft--;
-            // Disable inputs during animation
-            canvas.onmousedown = null;
-            document.onmouseup = null;
-
-            // Simple physics calculation (Power, Angle, Wind)
-            // Goal: Perfect Power (0.7-0.9), Perfect Angle (0.4-0.6)
-            // Wind adds erratic shift
-
-            const powerResult = currentPower;
-            const angleResult = currentAngle;
-            
-            // Core logic: Shot Path. 
-            // This is a professional animation path, not just a straight arc.
-            // Ball gets smaller to simulate depth.
-
-            ball.style.transition = 'none'; // reset transition for dynamic path
-            
-            // ANIMATION CYCLE (Professional)
-            // 1. Initial heave (up and toward hoop)
-            ball.style.transform = 'scale(0.8)';
-            const finalWind = currentWind * levels[currentLevel].windFactor;
-            
-            let finalX = 50 + (finalWind * 10); // Center hoop area
-            // Adjust X slightly based on angle. Low angle = further right. High angle = further left (airball).
-            finalX -= (angleResult * 15 - 7.5); // Simplified angle shift
-
-            ball.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            ball.style.left = finalX + '%';
-            ball.style.bottom = '350px'; // Peak height
-
-            // 2. Final drop (check for hit)
-            setTimeout(() => {
-                ball.style.transition = 'transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19)';
-                ball.style.bottom = '70px'; // Hoop level height
-                ball.style.transform = 'scale(0.6)';
-
-                // CHECK FOR HIT (Dynamic)
-                setTimeout(() => {
-                    if (isHit(powerResult, angleResult, finalWind)) {
-                        handleHit();
-                    } else {
-                        handleMiss();
-                    }
-                }, 300);
-            }, 800);
-        }
-
-        // PROFESSIONAL HIT DETECTION LOGIC
-        function isHit(power, angle, wind) {
-            const perfectPowerMin = 0.75;
-            const perfectPowerMax = 0.90;
-            const perfectAngleMin = 0.35;
-            const perfectAngleMax = 0.60;
-
-            // 1. Core Mechanics: Perfect alignment
-            const isPowerPerfect = (power >= perfectPowerMin && power <= perfectPowerMax);
-            const isAnglePerfect = (angle >= perfectAngleMin && angle <= perfectAngleMax);
-
-            if (!isPowerPerfect || !isAnglePerfect) return false;
-
-            // 2. Wind and Hoop Movement:
-            // Calculate final ball position vs dynamic hoop position
-            const canvasRect = canvas.getBoundingClientRect();
-            const hoopRect = hoop.getBoundingClientRect();
-            const ballRect = ball.getBoundingClientRect();
-
-            // The absolute center of the hoop in the canvas
-            const hoopCenterX = hoopRect.left - canvasRect.left + (hoopRect.width / 2);
-            // The absolute center of the ball in the canvas
-            const ballCenterX = ballRect.left - canvasRect.left + (ballRect.width / 2);
-
-            // Acceptable margin (based on hoop width)
-            const acceptableMarginX = 30; // professional sensitivity
-
-            const dx = Math.abs(hoopCenterX - ballCenterX);
-
-            return (dx <= acceptableMarginX);
-        }
-
-        function handleHit() {
-            score++;
-            scoreDisplay.innerText = score;
-            finalScore = score;
-            
-            // Visual Swish effect (ball disappears into net)
-            ball.style.transition = 'transform 0.2s';
-            ball.style.transform = 'scale(0.5) translateY(10px)';
-            ball.style.opacity = '0.5';
-            
-            setTimeout(() => {
-                ball.style.display = 'none';
-                ball.style.opacity = '1';
-
-                checkLevelStatus();
-            }, 200);
-        }
-
-        function handleMiss() {
-            // Professional Miss Mechanics: Bounce off backboard or airball
-            ball.style.transition = 'transform 0.5s';
-            ball.style.transform = 'scale(0.6) translateY(50px) translateX(20px)'; // simplified bounce
-            
-            setTimeout(() => {
-                ball.style.display = 'none';
-                
-                checkLevelStatus();
-            }, 500);
-        }
-
-        function checkLevelStatus() {
-            isShooting = false;
-            setBallPosition(levels[currentLevel].distance); // Reset position
-
-            if (score === TARGET_SCORE) {
-                handleAnniversaryUnlock();
-                return;
-            }
-
-            // Simple score targets for level transitions
-            // Level 1: 3, Level 2: 7, Level 3: 11, Level 4: 15, Level 5: 17
-            const targets = { 1: 3, 2: 7, 3: 11, 4: 15, 5: 17 };
-
-            if (score >= targets[currentLevel]) {
-                handleLevelComplete();
-            } else {
-                startPowerMeter(); // Go again in same level
-            }
-        }
-
-        // --- LEVEL TRANSITIONS ---
-
-        function handleLevelComplete() {
-            // State: Show complete modal
-            clearInterval(hoopInterval); // Stop hoop
-            
-            // Reuse the ready overlay for "level complete" feedback
-            currentLevelNum.innerText = currentLevel;
-            levelInstruction.innerText = "Level Complete. Gurugram to Delhi signal strengthening.";
-            document.querySelector('#ready-overlay h1').innerText = "Level " + currentLevel + " CLEAR!";
-            document.querySelector('#ready-overlay button').innerText = "TO LEVEL " + (currentLevel + 1);
-            
-            // Dynamic next level preparation
-            document.querySelector('#ready-overlay button').onclick = function() {
-                setupLevel(currentLevel + 1);
-            }
-            readyOverlay.classList.remove('hidden');
-        }
-
-        function handleAnniversaryUnlock() {
-            clearInterval(hoopInterval);
-            hideWind();
-            readyOverlay.classList.add('hidden');
-            finalUnlockOverlay.classList.remove('hidden');
-        }
-
-        // --- DYNAMIC EFFECTS MECHANICS ---
-
-        // HOOP MOVEMENT (Professional)
-        let hoopInterval;
-        function initHoopMovement(speed) {
-            clearInterval(hoopInterval);
-            let currentX = 50; // Starting left%
-            let margin = 20; // range from center (20 to 80%)
-
-            hoopInterval = setInterval(() => {
-                currentX += (hoopDirection * speed * 0.1); // Small incremental movement
-                if (currentX >= (50 + margin) || currentX <= (50 - margin)) hoopDirection *= -1;
-                hoop.style.left = currentX + '%';
-            }, 10);
-        }
-
-        function stopHoopMovement() {
-            clearInterval(hoopInterval);
-            hoop.style.left = '50%'; // reset center
-        }
-
-        // WIND MECHANICS
-        function initWind(factor) {
-            windIndicator.style.display = 'block';
-            updateWindValue();
-            // Randomly change wind every 3-5 seconds
-            setInterval(updateWindValue, 4000); 
-        }
-
-        function updateWindValue() {
-            // Range: -1 (Strong Left) to +1 (Strong Right)
-            currentWind = (Math.random() * 2 - 1).toFixed(2);
-            let directionText = "CALM";
-            if (currentWind < -0.3) directionText = "GURUGRAM LEFT";
-            if (currentWind > 0.3) directionText = "DELHI RIGHT";
-            
-            windValue.innerText = `${directionText} (${currentWind})`;
-        }
-
-        function hideWind() {
-            windIndicator.style.display = 'none';
-        }
-
-        // --- FINAL REVEAL ---
-
-        function revealAnniversaryData() {
-            finalUnlockOverlay.classList.add('hidden');
-            canvas.style.display = 'none';
-            scoreDisplay.parentElement.style.display = 'none';
-            anniversaryCard.style.display = 'block';
-            
-            // Optional: Smooth scroll to the card
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-
-    </style>
+
+<body>
+
+<div class="bg-animation">
+<div class="stars"></div>
+</div>
+
+<nav>
+
+<div class="logo">
+ABHISHIKTA.exe
+</div>
+
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="memories.html">Memories</a></li>
+<li><a href="gamezone.html">Games</a></li>
+<li><a href="final-letter.html">Final</a></li>
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="hero-text">
+
+<h1>
+17 Days With<br>
+<span class="gradient-text">
+The National Player
+</span>
+</h1>
+
+<p>
+Delhi ki basketball queen 🏀<br>
+PCB warrior 🔬<br>
+Class 12 survivor.<br><br>
+
+Aur meanwhile...
+Gurugram me ek banda completely hacked ho chuka hai.
+</p>
+
+<div class="hero-buttons">
+
+<a href="memories.html" class="btn btn-primary">
+ENTER LOVEVERSE
+</a>
+
+<a href="gamezone.html" class="btn btn-secondary">
+PLAY GAMES
+</a>
+
+</div>
+
+</div>
+
+<div class="hero-image">
+
+<div class="image-ring"></div>
+
+<img src="assets/image_0.png" class="main-image">
+
+<div class="floating-card card-1">
+🏀 National Basketball Player
+</div>
+
+<div class="floating-card card-2">
+❤️ Delhi ↔ Gurugram
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h1 class="section-title gradient-text">
+The Main Character
+</h1>
+
+<div class="glass">
+
+<div class="gallery">
+
+<div class="gallery-item">
+<img src="assets/image_0.png">
+
+<div class="overlay">
+Warmup Shot 🏀
+</div>
+
+</div>
+
+<div class="gallery-item">
+
+<img src="assets/image_1.png">
+
+<div class="overlay">
+The Locked Eyes ✨
+</div>
+
+</div>
+
+<div class="gallery-item">
+
+<img src="assets/image_2.png">
+
+<div class="overlay">
+Final Form ❤️
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h1 class="section-title">
+Our Stats 📊
+</h1>
+
+<div class="counter-box">
+
+<div class="counter">
+<h1>17</h1>
+<p>Days Together</p>
+</div>
+
+<div class="counter">
+<h1>2</h1>
+<p>Cities Connected</p>
+</div>
+
+<div class="counter">
+<h1>∞</h1>
+<p>Future Levels</p>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+Made with madness, love and zero emotional stability by Hackiton ❤️
+</footer>
+
+<button class="music-btn" onclick="toggleMusic()">
+🎵
+</button>
+
+<audio id="bgMusic" loop>
+<source src="assets/song.mp3">
+</audio>
+
+<script src="script.js"></script>
+
 </body>
 </html>
