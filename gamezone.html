@@ -1,99 +1,62 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
-<title>Games</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Love Games</title>
 
 <link rel="stylesheet" href="style.css">
 
-</head>
 
-<body>
+<style>
 
-<div class="bg-animation">
-<div class="stars"></div>
-</div>
 
-<nav>
+.games-container{
 
-<div class="logo">
-LOVE.GAMES
-</div>
+display:grid;
 
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="memories.html">Memories</a></li>
-<li><a href="final-letter.html">Final</a></li>
-</ul>
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
 
-</nav>
+gap:30px;
 
-<section class="section">
+margin-top:50px;
 
-<h1 class="section-title gradient-text">
-Romantic Challenges
-</h1>
+}
 
-<div class="gallery">
 
-<div class="glass">
+.game-box{
 
-<h2>🏀 Basketball Love Shot</h2>
+background:rgba(255,255,255,.05);
 
-<br>
+padding:30px;
 
-<p>
-Score 17 baskets to unlock the secret letter.
-</p>
+border-radius:25px;
 
-<br><br>
+border:1px solid rgba(255,255,255,.1);
 
-<button class="btn btn-primary">
-PLAY NOW
-</button>
+backdrop-filter:blur(10px);
 
-</div>
+text-align:center;
 
-<div class="glass">
+}
 
-<h2>💌 Memory Flip Cards</h2>
 
-<br>
+.game-area{
 
-<p>
-Flip cards and reveal hidden relationship moments.
-</p>
+margin-top:25px;
 
-<br><br>
+min-height:300px;
 
-<button class="btn btn-primary">
-COMING SOON
-</button>
+position:relative;
 
-</div>
+overflow:hidden;
 
-<div class="glass">
+border-radius:20px;
 
-<h2>🎯 Catch The Hearts</h2>
-
-<br>
-
-<p>
-Catch falling hearts before they disappear.
-</p>
-
-<br><br>
-
-<button class="btn btn-primary">
-COMING SOON
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-</body>
 </html>
+
